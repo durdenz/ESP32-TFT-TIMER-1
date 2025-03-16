@@ -1,8 +1,11 @@
 hw_timer_t *Timer0 = NULL;
+portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
  
 void IRAM_ATTR onTimer0()
 {
+    portENTER_CRITICAL_ISR(&timerMux);
     Serial.println("Timer0 IRQ Handler Entered");
+    portEXIT_CRITICAL_ISR(&timerMux);
 }
 void setup()
 {
